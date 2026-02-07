@@ -42,6 +42,10 @@ export default function BookingsPage() {
   const [showModal, setShowModal] = useState(false)
 const [generatedInvoice, setGeneratedInvoice] = useState<any>(null);
 
+const API_URL = process.env.BACKEND_URL;
+
+
+
   const [showCompleteModal, setShowCompleteModal] = useState(false)
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null)
   const [actualDistance, setActualDistance] = useState('')
@@ -62,19 +66,19 @@ const [generatedInvoice, setGeneratedInvoice] = useState<any>(null);
   // ---------------- FETCH ----------------
 
   const fetchBookings = async () => {
-    const res = await fetch('http://localhost:5000/api/bookings')
+    const res = await fetch(`{API_URL}/api/bookings`)
     const data = await res.json()
     setBookings(data.bookings || [])
   }
 
   const fetchCustomers = async () => {
-    const res = await fetch('http://localhost:5000/api/customers')
+    const res = await fetch(`{API_URL}/api/customers`)
     const data = await res.json()
     setCustomers(data.customers || [])
   }
 
   const fetchDrivers = async () => {
-    const res = await fetch('http://localhost:5000/api/drivers')
+    const res = await fetch(`{API_URL}/api/drivers`)
     const data = await res.json()
     setDrivers(data.drivers || [])
   }
@@ -106,7 +110,7 @@ const [generatedInvoice, setGeneratedInvoice] = useState<any>(null);
       acRequired: true,
     }
 
-    const res = await fetch('http://localhost:5000/api/bookings', {
+    const res = await fetch(`{API_URL}/api/bookings`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -159,7 +163,7 @@ const [generatedInvoice, setGeneratedInvoice] = useState<any>(null);
   // ---------------- ASSIGN DRIVER ----------------
 
   const assignDriver = async (bookingId: string, driverId: string) => {
-    const res = await fetch('http://localhost:5000/api/bookings/assign', {
+    const res = await fetch(`{API_URL}/api/bookings/assign`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ bookingId, driverId }),
@@ -181,7 +185,7 @@ const [generatedInvoice, setGeneratedInvoice] = useState<any>(null);
     if (!selectedBooking) return
 
     const res = await fetch(
-      `http://localhost:5000/api/bookings/${selectedBooking._id}/complete`,
+      `{API_URL}/api/bookings/${selectedBooking._id}/complete`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -274,7 +278,7 @@ const cancelTrip = async (bookingId: string) => {
   if (!confirmCancel) return;
 
   const res = await fetch(
-    `http://localhost:5000/api/bookings/${bookingId}/cancel`,
+    `{API_URL}/api/bookings/${bookingId}/cancel`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

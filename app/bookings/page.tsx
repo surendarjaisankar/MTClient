@@ -42,7 +42,7 @@ export default function BookingsPage() {
   const [showModal, setShowModal] = useState(false)
 const [generatedInvoice, setGeneratedInvoice] = useState<any>(null);
 
-const API_URL = process.env.BACKEND_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 
 

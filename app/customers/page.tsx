@@ -34,7 +34,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   const fetchCustomers = async () => {
     try {
-      const res = await fetch(`{API_URL}/api/customers`)
+      const res = await fetch(`${API_URL}/api/customers`)
       const data = await res.json()
 
       if (!res.ok) throw new Error(data.message)
@@ -72,8 +72,8 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
     try {
       const response = await fetch(
         editingId
-          ? `{API_URL}/api/customers/${editingId}`
-          : `{API_URL}/api/customers`,
+          ? `${API_URL}/api/customers/${editingId}`
+          : `${API_URL}/api/customers`,
         {
           method: editingId ? 'PUT' : 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -97,7 +97,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
     if (!confirm('Are you sure you want to delete this customer?')) return
 
     try {
-      const response = await fetch(`{API_URL}/api/customers/${id}`, {
+      const response = await fetch(`${API_URL}/api/customers/${id}`, {
         method: 'DELETE',
       })
 

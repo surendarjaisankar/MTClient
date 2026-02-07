@@ -66,19 +66,19 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
   // ---------------- FETCH ----------------
 
   const fetchBookings = async () => {
-    const res = await fetch(`{API_URL}/api/bookings`)
+    const res = await fetch(`${API_URL}/api/bookings`)
     const data = await res.json()
     setBookings(data.bookings || [])
   }
 
   const fetchCustomers = async () => {
-    const res = await fetch(`{API_URL}/api/customers`)
+    const res = await fetch(`${API_URL}/api/customers`)
     const data = await res.json()
     setCustomers(data.customers || [])
   }
 
   const fetchDrivers = async () => {
-    const res = await fetch(`{API_URL}/api/drivers`)
+    const res = await fetch(`${API_URL}/api/drivers`)
     const data = await res.json()
     setDrivers(data.drivers || [])
   }
@@ -110,7 +110,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
       acRequired: true,
     }
 
-    const res = await fetch(`{API_URL}/api/bookings`, {
+    const res = await fetch(`${API_URL}/api/bookings`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -163,7 +163,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
   // ---------------- ASSIGN DRIVER ----------------
 
   const assignDriver = async (bookingId: string, driverId: string) => {
-    const res = await fetch(`{API_URL}/api/bookings/assign`, {
+    const res = await fetch(`${API_URL}/api/bookings/assign`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ bookingId, driverId }),
@@ -185,7 +185,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
     if (!selectedBooking) return
 
     const res = await fetch(
-      `{API_URL}/api/bookings/${selectedBooking._id}/complete`,
+      `${API_URL}/api/bookings/${selectedBooking._id}/complete`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -278,7 +278,7 @@ const cancelTrip = async (bookingId: string) => {
   if (!confirmCancel) return;
 
   const res = await fetch(
-    `{API_URL}/api/bookings/${bookingId}/cancel`,
+    `${API_URL}/api/bookings/${bookingId}/cancel`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

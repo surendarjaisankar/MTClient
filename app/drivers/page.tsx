@@ -32,8 +32,7 @@ export default function DriversPage() {
   const [isOpen, setIsOpen] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
 
-const API_URL = process.env.BACKEND_URL;
-
+const API_URL = process.env.NEXT_PUBLIC_API_URL
 
   const emptyForm: Partial<Driver> = {
     name: '',

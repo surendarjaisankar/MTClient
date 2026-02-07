@@ -32,6 +32,9 @@ export default function DriversPage() {
   const [isOpen, setIsOpen] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
 
+const API_URL = process.env.BACKEND_URL;
+
+
   const emptyForm: Partial<Driver> = {
     name: '',
     phone: '',
@@ -49,15 +52,18 @@ export default function DriversPage() {
     fetchDrivers()
   }, [])
 
-  const fetchDrivers = async () => {
-    try {
-      const res = await fetch('http://localhost:5000/api/drivers')
-      const data = await res.json()
-      setDrivers(data.drivers || data)
-    } catch {
-      toast.error('Failed to load drivers')
-    }
+const fetchDrivers = async () => {
+  try {
+    const res = await fetch(`${API_URL}/api/drivers`);
+
+    if (!res.ok) throw new Error();
+
+    const data = await res.json();
+    setDrivers(data.drivers || data);
+  } catch {
+    toast.error('Failed to load drivers');
   }
+};
 
   const filteredDrivers = drivers.filter((d) =>
     d.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -90,8 +96,8 @@ export default function DriversPage() {
     try {
       const response = await fetch(
         editingId
-          ? `http://localhost:5000/api/drivers/${editingId}`
-          : 'http://localhost:5000/api/drivers',
+          ? `${API_URL}/api/drivers/${editingId}`
+          : `${API_URL}/api/drivers`,
         {
           method: editingId ? 'PUT' : 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -122,7 +128,7 @@ export default function DriversPage() {
     if (!confirm('Are you sure you want to delete this driver?')) return
 
     try {
-      const res = await fetch(`http://localhost:5000/api/drivers/${id}`, {
+      const res = await fetch(`${API_URL}/api/drivers/${id}`, {
         method: 'DELETE'
       })
 

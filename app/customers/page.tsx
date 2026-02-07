@@ -81,8 +81,18 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
         }
       )
 
-      const data = await response.json()
-      if (!response.ok) throw new Error(data.message)
+      if (!response.ok) {
+  const errorText = await response.text()
+  throw new Error(errorText)
+}
+
+const contentType = response.headers.get("content-type")
+
+let data = null
+if (contentType?.includes("application/json")) {
+  data = await response.json()
+}
+
 
       toast.success(editingId ? 'Customer updated successfully' : 'Customer added successfully')
 
@@ -101,8 +111,18 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
         method: 'DELETE',
       })
 
-      const data = await response.json()
-      if (!response.ok) throw new Error(data.message)
+      if (!response.ok) {
+  const errorText = await response.text()
+  throw new Error(errorText)
+}
+
+const contentType = response.headers.get("content-type")
+
+let data = null
+if (contentType?.includes("application/json")) {
+  data = await response.json()
+}
+
 
       toast.success('Customer deleted successfully')
       await fetchCustomers()

@@ -25,6 +25,8 @@ export default function CustomersPage() {
   const [editingId, setEditingId] = useState<string | null>(null)
   const [formData, setFormData] = useState<Partial<Customer>>({})
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  
   // ✅ Fetch customers
   useEffect(() => {
     fetchCustomers()
@@ -32,7 +34,7 @@ export default function CustomersPage() {
 
   const fetchCustomers = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/customers')
+      const res = await fetch(`{API_URL}/api/customers`)
       const data = await res.json()
 
       if (!res.ok) throw new Error(data.message)
@@ -70,8 +72,8 @@ export default function CustomersPage() {
     try {
       const response = await fetch(
         editingId
-          ? `http://localhost:5000/api/customers/${editingId}`
-          : 'http://localhost:5000/api/customers',
+          ? `{API_URL}/api/customers/${editingId}`
+          : `{API_URL}/api/customers`,
         {
           method: editingId ? 'PUT' : 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -95,7 +97,7 @@ export default function CustomersPage() {
     if (!confirm('Are you sure you want to delete this customer?')) return
 
     try {
-      const response = await fetch(`http://localhost:5000/api/customers/${id}`, {
+      const response = await fetch(`{API_URL}/api/customers/${id}`, {
         method: 'DELETE',
       })
 
